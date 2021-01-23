@@ -26,6 +26,11 @@ public class MatrixComp {
 
     public MatrixComp(int strings_num, int columns_num) {
         this.arr = new CompNum[strings_num][columns_num];
+        for (int i = 0; i < strings_num; i++) {
+            for (int j = 0; j < columns_num; j++) {
+                this.arr[i][j] = new CompNum(0, 0);
+            }
+        }
     }
 
     public int getN() {
@@ -78,6 +83,11 @@ public class MatrixComp {
                     "must be equal Second Matrix Strings Number");
         }
         CompNum[][] arr = new CompNum[this.arr.length][this.arr[0].length];
+        for (int i = 0; i < this.arr.length; i++) {
+            for (int j = 0; j < this.arr[0].length; j++) {
+                arr[i][j] = new CompNum(0.0, 0.0);
+            }
+        }
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr[0].length; j++) {
                 for (int k = 0; k < this.arr[0].length; k++) {
@@ -103,7 +113,9 @@ public class MatrixComp {
             throw new ArithmeticException("Matrix must be square");
         } else {
             if (this.arr.length == 2){
-                return this.arr[0][0].multiply(this.arr[1][1]).minus(this.arr[0][1].multiply(this.arr[1][0]));
+                return this.arr[0][0].multiply(this.arr[1][1])
+                        .minus(
+                       this.arr[0][1].multiply(this.arr[1][0]));
             }
             else{
                 CompNum sum = new CompNum(0.0, 0.0);
@@ -158,7 +170,7 @@ public class MatrixComp {
         StringBuilder result = new StringBuilder("");
         for (CompNum[] comps: this.arr) {
             for (CompNum x: comps) {
-                result.append(x.toString()).append(" ");
+                result.append(x.toString()).append(" | ");
             }
             result.append("\n");
         }

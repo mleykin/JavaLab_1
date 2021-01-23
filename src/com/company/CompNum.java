@@ -72,7 +72,7 @@ public class CompNum {
     public CompNum multiply(CompNum new_num) {
         double tmp_real = this.real * new_num.real - this.unreal * new_num.unreal;
         double tmp_unreal = this.real * new_num.unreal + this.unreal * new_num.real;
-        return new CompNum(tmp_real, tmp_unreal).setModuleAndArgument();
+        return (new CompNum(tmp_real, tmp_unreal)).setModuleAndArgument();
     }
 
     public CompNum divide(CompNum new_num) throws ArithmeticException {
@@ -100,10 +100,10 @@ public class CompNum {
 
     @Override
     public String toString() {
-        if (this.real == 0)
-            return this.unreal + "*i";
-        else if (this.unreal == 0)
+        if (this.unreal == 0)
             return this.real + "";
+        else if (this.real == 0)
+            return this.unreal + "*i";
         String result = this.unreal > 0 ? " + " : " - ";
         result = this.real + result + Math.abs(this.unreal) + "*i";
         return result;
