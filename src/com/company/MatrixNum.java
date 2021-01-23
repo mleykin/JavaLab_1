@@ -103,12 +103,12 @@ public class MatrixNum {
             }
             else{
                 int sum = 0;
-                for (int i = 0; i < this.arr.length; i++){ // идем по элементам первой строки
-                    MatrixNum matrixNew = new MatrixNum(this.arr.length-1, this.arr.length-1); // создаем матрицу из оставшихся чисел
-                    int tmp_i = 0; // координаты новой матрицы
+                for (int i = 0; i < this.arr.length; i++){
+                    MatrixNum matrixNew = new MatrixNum(this.arr.length-1, this.arr.length-1);
+                    int tmp_i = 0;
                     int tmp_j = 0;
-                    for (int k = 1; k < this.arr.length; k++){ // идем по оставшимся строкам исходной матрицы
-                        for (int l = 0; l < this.arr.length; l++){ // идем по столбцам
+                    for (int k = 1; k < this.arr.length; k++){
+                        for (int l = 0; l < this.arr.length; l++){
                             if (l != i) {
                                 matrixNew.arr[tmp_i][tmp_j] = this.arr[k][l];
                                 tmp_j += 1;

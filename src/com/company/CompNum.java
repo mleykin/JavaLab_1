@@ -88,6 +88,10 @@ public class CompNum {
         return tmp1.setModuleAndArgument();
     }
 
+    public CompNum copy() {
+        return new CompNum(this.real, this.unreal);
+    }
+
     public void copy(CompNum new_num) {
         this.real = new_num.real;
         this.unreal = new_num.unreal;
