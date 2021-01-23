@@ -10,13 +10,14 @@ public class CompNum {
     private double module = 0.0;
     private double argument = 0.0;
 
-    private void setModuleAndArgument() {
+    private CompNum setModuleAndArgument() {
         this.module = Math.sqrt(Math.abs(
                 this.real * this.real + this.unreal * this.unreal));
         double tmp = this.unreal / this.real;
         this.argument = this.real > 0 ? 1 / Math.tan(tmp) :
                         this.unreal > 0 ? Math.PI + 1 / Math.tan(tmp) :
                         1 / Math.tan(tmp) - Math.PI;
+        return this;
     }
 
     // public
@@ -54,35 +55,37 @@ public class CompNum {
         this.setModuleAndArgument();
     }
 
-    public void add(CompNum new_num) {
-        this.real += new_num.real;
-        this.unreal += new_num.unreal;
-        this.setModuleAndArgument();
+    public CompNum plus(CompNum new_num) {
+        CompNum compNum = new CompNum(this.real + new_num.real,
+                this.unreal + new_num.unreal);
+        compNum.setModuleAndArgument();
+        return compNum;
     }
 
-    public void subtract(CompNum new_num) {
-        this.real -= new_num.real;
-        this.unreal -= new_num.unreal;
-        this.setModuleAndArgument();
+    public CompNum minus(CompNum new_num) {
+        CompNum compNum = new CompNum(this.real - new_num.real,
+                this.unreal - new_num.unreal);
+        compNum.setModuleAndArgument();
+        return compNum;
     }
 
-    public void multiply(CompNum new_num) {
-        double tmp = this.real * new_num.real - this.unreal * new_num.unreal;
-        this.unreal = this.real * new_num.unreal + this.unreal * new_num.real;
-        this.real = tmp;
-        this.setModuleAndArgument();
+    public CompNum multiply(CompNum new_num) {
+        double tmp_real = this.real * new_num.real - this.unreal * new_num.unreal;
+        double tmp_unreal = this.real * new_num.unreal + this.unreal * new_num.real;
+        return new CompNum(tmp_real, tmp_unreal).setModuleAndArgument();
     }
 
-    public void divide(CompNum new_num) throws ArithmeticException {
+    public CompNum divide(CompNum new_num) throws ArithmeticException {
         CompNum sopr = new CompNum(new_num.real, -new_num.unreal);
-        CompNum tmp_new_num = new CompNum(new_num);
-        tmp_new_num.multiply(sopr);
+        CompNum tmp1 = new CompNum(this);
+        CompNum tmp2 = new CompNum(new_num);
+        tmp2.multiply(sopr);
         if (new_num.real == 0 && new_num.unreal == 0)
             throw new ArithmeticException("Divide by 0");
-        this.multiply(sopr);
-        this.real = this.real / tmp_new_num.real;
-        this.unreal = this.unreal / tmp_new_num.real;
-        this.setModuleAndArgument();
+        tmp1.multiply(sopr);
+        tmp1.real = tmp1.real / tmp2.real;
+        tmp1.unreal = tmp1.unreal / tmp2.real;
+        return tmp1.setModuleAndArgument();
     }
 
     public void copy(CompNum new_num) {
@@ -93,6 +96,10 @@ public class CompNum {
 
     @Override
     public String toString() {
+        if (this.real == 0)
+            return this.unreal + "*i";
+        else if (this.unreal == 0)
+            return this.real + "";
         String result = this.unreal > 0 ? " + " : " - ";
         result = this.real + result + Math.abs(this.unreal) + "*i";
         return result;
