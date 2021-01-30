@@ -7,7 +7,7 @@ public class CompNum {
     // private
     private double real = 0.0;
     private double unreal = 0.0;
-    private double module = 0.0;
+    private double module = 0.0;   //this fields are calculated, no need to make them class members
     private double argument = 0.0;
 
     private CompNum setModuleAndArgument() {
@@ -34,7 +34,7 @@ public class CompNum {
     }
 
     public double getReal(){
-        return this.real;
+        return this.real;    //you don't need to use this here
     }
 
     public double getUnreal() {
@@ -49,7 +49,7 @@ public class CompNum {
         return this.argument;
     }
 
-    public void setNumber(double real, double unreal) {
+    public void setNumber(double real, double unreal) {  //this exactly duplicated constructor, why do you need it?
         this.real = real;
         this.unreal = unreal;
         this.setModuleAndArgument();
@@ -92,7 +92,7 @@ public class CompNum {
         return new CompNum(this.real, this.unreal);
     }
 
-    public void copy(CompNum new_num) {
+    public void copy(CompNum new_num) {   //again duplicate of the constructor
         this.real = new_num.real;
         this.unreal = new_num.unreal;
         this.setModuleAndArgument();
